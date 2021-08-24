@@ -40,13 +40,13 @@ public class DecipherTest {
     public void invalidInputTest() {
         String decryptedWord = "pp";
         decryptedWord = newWord.decrypt(decryptedWord);
-        Assertions.assertEquals(decryptedWord, "This word cannot be translated because the symbol: p is not part of the encrypted alphabet!");
+        Assertions.assertEquals(decryptedWord, "This value is not within the available symbols in the alphabet!");
     }
 
     @Test
     public void blankSpaceTest() {
         String decryptedWord = "";
         decryptedWord = newWord.decrypt(decryptedWord);
-        Assertions.assertEquals(decryptedWord, "Please enter a word longer than 0 characters!");
+        Assertions.assertEquals(decryptedWord, "Please enter a word!");
     }
 }

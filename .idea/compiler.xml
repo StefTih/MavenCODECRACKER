@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MavenCODECRACKER" />
+        <module name="CODECRACKER" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MavenCODECRACKER" target="16" />
+      <module name="CODECRACKER" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

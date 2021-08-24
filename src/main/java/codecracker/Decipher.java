@@ -9,65 +9,76 @@ import java.util.Scanner;
  */
 public class Decipher {
 
-    private final HashMap<String, String> cipherAlphabetMapping;
+    private HashMap<String, String> cipherAlphabetMapping;
 
+//    In order to avoid initialising the HashMap, you can use the double brackets declaration method.
+//    All methods must start with a lower case letter.
     Decipher() {
-        cipherAlphabetMapping = new HashMap();
-        MapAlphabetToCipher();
+        cipherAlphabetMapping = new HashMap<String,String>() {{
+            put("!", "a");
+            put(")", "b");
+            put("\"", "c");
+//            The double quote character has to be escaped with a backslash in a Java string literal. Other characters
+//            that need special treatment include:
+//            Carriage return and newline: "\r" and "\n"
+//            Backslash: "\\\\"
+//            Single quote: "\'"
+//            Horizontal tab and form feed: "\t" and "\f"
+            put("(", "d");
+            put("£", "e");
+            put("*", "f");
+            put("%", "g");
+            put("&", "h");
+            put(">", "i");
+            put("<", "j");
+            put("@", "k");
+            put("a", "l");
+            put("b", "m");
+            put("c", "n");
+            put("d", "o");
+            put("e", "p");
+            put("f", "q");
+            put("g", "r");
+            put("h", "s");
+            put("i", "t");
+            put("j", "u");
+            put("k", "v");
+            put("l", "w");
+            put("m", "x");
+            put("n", "y");
+            put("o", "z");
+            put(" ", " ");
+        }};
     }
 
-    public void MapAlphabetToCipher() {
-        //Old version (you can flex with it but is a bit tedious in the long run)
-            /*for( int asciiValue = 97; asciiValue<123; asciiValue++)
-            {
-                char newChar = (char) asciiValue;
-                String character = Character.toString(newChar);
-                cipherAlphabetMapping.put(Character.toString(cipher[asciiValue-97]),character);
+//        Another way to do the above is by using a static block.
 
-            }*/
-        cipherAlphabetMapping.put("!", "a");
-        cipherAlphabetMapping.put(")", "b");
-        cipherAlphabetMapping.put(Character.toString('"'), "c");
-        cipherAlphabetMapping.put("(", "d");
-        cipherAlphabetMapping.put("£", "e");
-        cipherAlphabetMapping.put("*", "f");
-        cipherAlphabetMapping.put("%", "g");
-        cipherAlphabetMapping.put("&", "h");
-        cipherAlphabetMapping.put(">", "i");
-        cipherAlphabetMapping.put("<", "j");
-        cipherAlphabetMapping.put("@", "k");
-        cipherAlphabetMapping.put("a", "l");
-        cipherAlphabetMapping.put("b", "m");
-        cipherAlphabetMapping.put("c", "n");
-        cipherAlphabetMapping.put("d", "o");
-        cipherAlphabetMapping.put("e", "p");
-        cipherAlphabetMapping.put("f", "q");
-        cipherAlphabetMapping.put("g", "r");
-        cipherAlphabetMapping.put("h", "s");
-        cipherAlphabetMapping.put("i", "t");
-        cipherAlphabetMapping.put("j", "u");
-        cipherAlphabetMapping.put("k", "v");
-        cipherAlphabetMapping.put("l", "w");
-        cipherAlphabetMapping.put("m", "x");
-        cipherAlphabetMapping.put("n", "y");
-        cipherAlphabetMapping.put("o", "z");
-        cipherAlphabetMapping.put(" ", " ");
+//        {
+//            cipherAlphabetMapping = new HashMap<>();
+//        }
+
+//        A class can have any number of static initialization blocks, and they can appear anywhere in the class body.
+//        The runtime system guarantees that static initialization blocks are called in the order that they appear
+//        in the source code.
 
 
-    }
-
+//    Един метод или трябва да прави това, което името му казва или да хвърля exception. Нито повече нито по-малко.
     public String decrypt(String newWord) {
         String decryption = "";
         newWord = newWord.toLowerCase().trim();
-        if (newWord.length() < 1) {
-            return "Please enter a word longer than 0 characters!";
-        }
-        for (int i = 0; i < newWord.length(); i++) {
-            String newLetter = findLetter(i, newWord);
-            if (newLetter.equals("Error")) {
-                return "This word cannot be translated because the symbol: " + newWord.charAt(i) + " is not part of the encrypted alphabet!";
+        try {
+            if (newWord.length()<1){
+                throw new Exception("Please enter a word!");
             }
-            decryption = decryption + newLetter;
+            for (int i = 0; i < newWord.length(); i++) {
+                String newLetter = findLetter(i, newWord);
+                if (newLetter.equals("Error")) {
+                    throw new Exception("This value is not within the available symbols in the alphabet!");
+                }
+                decryption = decryption + newLetter;
+            }
+        } catch (Exception exception) {
+            decryption = exception.getMessage();
         }
         return decryption;
     }
@@ -85,14 +96,4 @@ public class Decipher {
 
     }
 
-    public static void main(String Args[]) {
-        while (true) {
-            System.out.println("Enter encrypted word:");
-            Scanner input = new Scanner(System.in);
-            Decipher newWord = new Decipher();
-            String decryptedWord = newWord.decrypt(input.nextLine());
-            System.out.println("The encrypted code means: " + decryptedWord);
-        }
-
-    }
 }
